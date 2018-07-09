@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cddb5da492a0f0146996012dbf28ee58
+timeCreated: 1531126203
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - appleSE: {fileID: 8300000, guid: 4fbdf30b30a9ca54698683177496cbad, type: 3}
+  - bombSE: {fileID: 8300000, guid: 8337d5e4543f86646a57e76c9c9b8a50, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
