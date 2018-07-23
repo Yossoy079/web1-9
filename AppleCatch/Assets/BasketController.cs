@@ -8,6 +8,9 @@ public class BasketController : MonoBehaviour {
     public AudioClip bombSE;
     AudioSource aud;
     GameObject director;
+    private const float masuSize = 1.0f; //ステージの一辺のサイズは1らしい
+    private const float min = -1.0f; //ステージは0,0に存在する3*3の正方形らしい
+    private const float max = 1.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -17,22 +20,33 @@ public class BasketController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        Vector3 thisPos = transform.position;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                float x = Mathf.RoundToInt(hit.point.x);
-                float z = Mathf.RoundToInt(hit.point.z);
-                transform.position = new Vector3(x, 0, z);
-            }
+            if(thisPos.z != max)
+                transform.position = new Vector3(thisPos.x, 0, thisPos.z + masuSize);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (thisPos.z != min)
+                transform.position = new Vector3(thisPos.x, 0, thisPos.z - masuSize);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (thisPos.x != min)
+                transform.position = new Vector3(thisPos.x - masuSize, 0, thisPos.z);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (thisPos.x != max)
+                transform.position = new Vector3(thisPos.x + masuSize, 0, thisPos.z);
         }
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Apple")
+        GetComponent<ParticleSystem>().Play();
+        if (other.gameObject.tag == "Apple")
         {
             this.director.GetComponent<GameDirector>().GetApple();
             this.aud.PlayOneShot(this.appleSE);
